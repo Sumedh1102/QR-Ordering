@@ -28,28 +28,13 @@ app.add_middleware(
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FRONTEND_DIR = os.path.join(BASE_DIR, "..", "frontend")
 
-@app.get("/")
-async def read_index():
-    return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
-
-@app.get("/style.css")
-async def read_css():
-    return FileResponse(os.path.join(FRONTEND_DIR, "style.css"))
-
-@app.get("/script.js")
-async def read_js():
-    return FileResponse(os.path.join(FRONTEND_DIR, "script.js"))
-
-@app.get("/vendor_script.js")
-async def read_vendor_js():
-    return FileResponse(os.path.join(FRONTEND_DIR, "vendor_script.js"))
-
-@app.get("/vendor")
-async def read_vendor():
-    return FileResponse(os.path.join(FRONTEND_DIR, "vendor.html"))
-
-# This will serve other files like images etc
-app.mount("/", StaticFiles(directory=FRONTEND_DIR), name="static")
+@app.get("/debug-files")
+async def debug_files():
+    try:
+        files = os.listdir(FRONTEND_DIR)
+        return {"frontend_dir": FRONTEND_DIR, "files": files}
+    except Exception as e:
+        return {"error": str(e), "path": FRONTEND_DIR}
 
 @app.middleware("http")
 async def log_requests(request, call_next):
@@ -198,6 +183,29 @@ def create_payment(payment: schemas.PaymentCreate, db: Session = Depends(get_db)
     db.commit()
     db.refresh(db_payment)
     return db_payment
+
+@app.get("/")
+async def read_index():
+    return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
+
+@app.get("/style.css")
+async def read_css():
+    return FileResponse(os.path.join(FRONTEND_DIR, "style.css"))
+
+@app.get("/script.js")
+async def read_js():
+    return FileResponse(os.path.join(FRONTEND_DIR, "script.js"))
+
+@app.get("/vendor_script.js")
+async def read_vendor_js():
+    return FileResponse(os.path.join(FRONTEND_DIR, "vendor_script.js"))
+
+@app.get("/vendor")
+async def read_vendor():
+    return FileResponse(os.path.join(FRONTEND_DIR, "vendor.html"))
+
+# Final fallback: Serve images and other static assets
+app.mount("/", StaticFiles(directory=FRONTEND_DIR), name="static")
 
 if __name__ == "__main__":
     import uvicorn
