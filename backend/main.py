@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, Request
 from sqlalchemy.orm import Session
 from typing import List
 import models, schemas, database, algorithms
@@ -8,6 +8,8 @@ import qrcode
 import os
 
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -22,6 +24,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Serve Frontend Files
+app.mount("/frontend", StaticFiles(directory="../frontend"), name="frontend")
+
+@app.get("/")
+async def read_index():
+    return FileResponse("../frontend/index.html")
+
+@app.get("/vendor")
+async def read_vendor():
+    return FileResponse("../frontend/vendor.html")
+
 @app.middleware("http")
 async def log_requests(request, call_next):
     print(f"Incoming request: {request.method} {request.url}")
@@ -34,14 +47,15 @@ async def log_requests(request, call_next):
 # --- Vendor Endpoints ---
 
 @app.post("/vendors/", response_model=schemas.Vendor)
-def create_vendor(vendor: schemas.VendorCreate, db: Session = Depends(get_db)):
+def create_vendor(vendor: schemas.VendorCreate, request: Request, db: Session = Depends(get_db)):
+    base_url = str(request.base_url)
     db_vendor = models.Vendor(
         name=vendor.name,
         email=vendor.email,
         hashed_password=vendor.password, # In real app, hash this
         latitude=vendor.latitude,
         longitude=vendor.longitude,
-        qr_code_url=f"http://localhost:8005/vendor/{vendor.name}" # Simplified
+        qr_code_url=f"{base_url}frontend/index.html?vendor_id=1" # Simplified for this demo
     )
     db.add(db_vendor)
     db.commit()

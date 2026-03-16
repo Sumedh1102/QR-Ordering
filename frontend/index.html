@@ -67,6 +67,13 @@
                     <button class="btn" id="pay-cash" onclick="selectPayment('Cash')" style="flex: 1; border: 1px solid var(--border);">Cash at Stall</button>
                 </div>
 
+                <div id="upi-qr-container" class="glass-card" style="display: block; text-align: center; margin-bottom: 20px;">
+                    <p class="text-muted" style="margin-bottom: 10px;">Scan to Pay</p>
+                    <div class="qr-box">
+                        <img id="upi-qr-image" src="https://i.postimg.cc/ZndKf414/Screenshot-2026-03-16-at-1-00-00-PM.png" alt="UPI QR Code" class="p-">
+                    </div>
+                </div>
+
                 <button id="submit-order-btn" class="btn btn-primary" style="width: 100%;" onclick="submitOrder()">Confirm & Pay</button>
             </div>
         </div>

@@ -1,7 +1,7 @@
 
 
 
-const API_BASE = "http://localhost:8005";
+const API_BASE = window.location.origin;
 
 // Read vendor ID from QR URL
 const urlParams = new URLSearchParams(window.location.search);
@@ -163,6 +163,11 @@ function selectPayment(method) {
     selectedPaymentMethod = method;
     document.getElementById('pay-upi').style.borderColor = method === 'UPI' ? 'var(--primary)' : 'var(--border)';
     document.getElementById('pay-cash').style.borderColor = method === 'Cash' ? 'var(--primary)' : 'var(--border)';
+    
+    const qrContainer = document.getElementById('upi-qr-container');
+    if (qrContainer) {
+        qrContainer.style.display = method === 'UPI' ? 'block' : 'none';
+    }
 }
 
 // --- Order Submission ---

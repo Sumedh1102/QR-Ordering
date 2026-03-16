@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8005";
+const API_BASE = window.location.origin;
 let currentVendorId = 1;
 
 document.addEventListener('DOMContentLoaded', () => {
