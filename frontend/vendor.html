@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Bites - Vendor Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .vendor-grid {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-row input,
+        .form-row textarea {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--glass);
+            color: var(--text-main);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="vendor-app" class="container">
+        <header class="glass-card"
+            style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <h1>Vendor Dashboard</h1>
+            <nav style="display: flex; gap: 20px;">
+                <button class="btn" style="background: var(--glass);" onclick="showSection('orders')">Orders</button>
+                <button class="btn" style="background: var(--glass);" onclick="showSection('menu')">Manage Menu</button>
+            </nav>
+            <div id="queue-stats" class="text-muted">Queue: 0 | Live Status: Active</div>
+        </header>
+
+        <div id="orders-section" class="vendor-grid">
+            <!-- Sidebar: Active Queue -->
+            <aside class="glass-card">
+                <h3>Current Queue</h3>
+                <div id="queue-list" class="order-list">
+                    <!-- Queue numbers will be injected here -->
+                </div>
+            </aside>
+
+            <!-- Main Content: Order Management -->
+            <main>
+                <div class="glass-card">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                        <h2>Live Orders</h2>
+                        <button class="btn btn-primary" onclick="loadVendorOrders()">Refresh</button>
+                    </div>
+
+                    <div id="orders-container" class="order-list">
+                        <!-- Full order cards will be injected here -->
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <div id="menu-section" style="display: none;">
+            <div class="glass-card" style="margin-bottom: 20px;">
+                <h2>Add New Menu Item</h2>
+                <div class="form-row">
+                    <input type="text" id="new-item-name" placeholder="Item Name">
+                    <input type="number" id="new-item-price" placeholder="Price (₹)">
+                    <input type="number" id="new-item-prep" placeholder="Prep Time (mins)">
+                </div>
+                <div class="form-row">
+                    <textarea id="new-item-desc" placeholder="Description"></textarea>
+                </div>
+                <button class="btn btn-primary" onclick="addMenuItem()">Add to Menu</button>
+            </div>
+
+            <div class="glass-card">
+                <h2>Current Menu Items</h2>
+                <div id="vendor-menu-list" class="order-list">
+                    <!-- Menu items will be listed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="vendor_script.js"></script>
+</body>
+
+</html>

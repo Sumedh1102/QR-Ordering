@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Bites - Easy QR Ordering</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app" class="container">
+        <!-- Main Menu View -->
+        <div id="menu-view">
+            <header>
+                <div class="glass-card" style="margin-bottom: 30px;">
+                    <h1 id="vendor-name">Street Bites Vendor</h1>
+                    <p id="location-status" class="text-muted">Checking location...</p>
+                </div>
+            </header>
+
+            <div class="menu-grid" id="menu-items-grid">
+                <!-- Items will be injected here -->
+            </div>
+
+            <div id="cart-drawer" class="glass-card cart-summary" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h3 id="cart-count">0 Items</h3>
+                        <p id="cart-total">Total: ₹0</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="showCheckout()">Place Order</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout View -->
+        <div id="checkout-view" style="display: none;">
+            <div class="glass-card">
+                <button class="btn" style="background: var(--glass); margin-bottom: 20px;" onclick="hideCheckout()">← Back</button>
+                <h2>Complete Your Order</h2>
+                <div class="order-list" id="checkout-items"></div>
+                <hr style="border: none; border-top: 1px solid var(--border); margin: 20px 0;">
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label>Your Name</label>
+                    <input type="text" id="cust-name" class="glass-card" style="width: 100%; border-radius: 12px; padding: 10px; margin-top: 5px;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label>Order Type</label>
+                    <select id="order-type" class="glass-card" style="width: 100%; border-radius: 12px; padding: 10px; margin-top: 5px; appearance: none;">
+                        <option value="Dine-in">Dine-in</option>
+                        <option value="Takeaway">Takeaway</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="is-express" style="width: 20px; height: 20px;">
+                    <label for="is-express">⚡ Express Order (Small orders/Priority)</label>
+                </div>
+
+                <h3>Payment Method</h3>
+                <div style="display: flex; gap: 10px; margin: 15px 0;">
+                    <button class="btn" id="pay-upi" onclick="selectPayment('UPI')" style="flex: 1; border: 1px solid var(--primary);">UPI Pay</button>
+                    <button class="btn" id="pay-cash" onclick="selectPayment('Cash')" style="flex: 1; border: 1px solid var(--border);">Cash at Stall</button>
+                </div>
+
+                <button id="submit-order-btn" class="btn btn-primary" style="width: 100%;" onclick="submitOrder()">Confirm & Pay</button>
+            </div>
+        </div>
+
+        <!-- Order Status View -->
+        <div id="status-view" style="display: none;">
+            <div class="glass-card" style="text-align: center;">
+                <h2 id="status-order-id">Order #00</h2>
+                <div id="status-badge" class="badge">Pending</div>
+                <div style="margin: 30px 0;">
+                    <p class="text-muted">Estimated Wait Time</p>
+                    <h1 id="wait-time" style="font-size: 3rem; color: var(--primary);">0 mins</h1>
+                </div>
+                <p id="queue-position">Position in queue: Calculating...</p>
+                <div class="loader" style="margin: 20px auto;"></div>
+                <button class="btn" style="background: var(--glass); width: 100%;" onclick="location.reload()">Refresh Status</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
