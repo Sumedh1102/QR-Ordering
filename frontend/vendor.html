@@ -40,8 +40,8 @@
             style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
             <h1>Vendor Dashboard</h1>
             <nav style="display: flex; gap: 20px;">
-                <button class="btn" style="background: var(--glass);" onclick="showSection('orders')">Orders</button>
-                <button class="btn" style="background: var(--glass);" onclick="showSection('menu')">Manage Menu</button>
+                <button id="show-orders-btn" class="btn" style="background: var(--glass);">Orders</button>
+                <button id="show-menu-btn" class="btn" style="background: var(--glass);">Manage Menu</button>
             </nav>
             <div id="queue-stats" class="text-muted">Queue: 0 | Live Status: Active</div>
         </header>
@@ -60,7 +60,7 @@
                 <div class="glass-card">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
                         <h2>Live Orders</h2>
-                        <button class="btn btn-primary" onclick="loadVendorOrders()">Refresh</button>
+                        <button id="refresh-orders-btn" class="btn btn-primary">Refresh</button>
                     </div>
 
                     <div id="orders-container" class="order-list">
@@ -81,7 +81,7 @@
                 <div class="form-row">
                     <textarea id="new-item-desc" placeholder="Description"></textarea>
                 </div>
-                <button class="btn btn-primary" onclick="addMenuItem()">Add to Menu</button>
+                <button id="add-item-btn" class="btn btn-primary">Add to Menu</button>
             </div>
 
             <div class="glass-card">

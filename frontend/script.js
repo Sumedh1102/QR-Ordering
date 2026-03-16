@@ -16,6 +16,24 @@ document.addEventListener('DOMContentLoaded', () => {
     loadVendorInfo();
     checkLocation();
     loadMenu();
+    
+    // Add event listeners
+    document.getElementById('show-checkout-btn')?.addEventListener('click', showCheckout);
+    document.getElementById('hide-checkout-btn')?.addEventListener('click', hideCheckout);
+    document.getElementById('pay-upi')?.addEventListener('click', () => selectPayment('UPI'));
+    document.getElementById('pay-cash')?.addEventListener('click', () => selectPayment('Cash'));
+    document.getElementById('submit-order-btn')?.addEventListener('click', submitOrder);
+    document.getElementById('refresh-status-btn')?.addEventListener('click', () => location.reload());
+    
+    // Event delegation for cart buttons
+    document.getElementById('menu-items-grid').addEventListener('click', (e) => {
+        if (e.target.classList.contains('add-to-cart-btn')) {
+            const id = parseInt(e.target.dataset.id);
+            const name = e.target.dataset.name;
+            const price = parseFloat(e.target.dataset.price);
+            addToCart(id, name, price);
+        }
+    });
 });
 
 async function loadVendorInfo() {
@@ -98,7 +116,10 @@ async function loadMenu() {
                 <p class="text-muted">${item.description}</p>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
                     <span style="font-weight: 700; color: var(--primary);">₹${item.price}</span>
-                    <button class="btn btn-primary" onclick="addToCart(${item.id}, '${item.name}', ${item.price})">+</button>
+                    <button class="btn btn-primary add-to-cart-btn" 
+                            data-id="${item.id}" 
+                            data-name="${item.name}" 
+                            data-price="${item.price}">+</button>
                 </div>
             </div>
         `).join('');

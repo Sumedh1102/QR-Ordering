@@ -30,7 +30,7 @@
                         <h3 id="cart-count">0 Items</h3>
                         <p id="cart-total">Total: ₹0</p>
                     </div>
-                    <button class="btn btn-primary" onclick="showCheckout()">Place Order</button>
+                    <button id="show-checkout-btn" class="btn btn-primary">Place Order</button>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
         <!-- Checkout View -->
         <div id="checkout-view" style="display: none;">
             <div class="glass-card">
-                <button class="btn" style="background: var(--glass); margin-bottom: 20px;" onclick="hideCheckout()">← Back</button>
+                <button id="hide-checkout-btn" class="btn" style="background: var(--glass); margin-bottom: 20px;">← Back</button>
                 <h2>Complete Your Order</h2>
                 <div class="order-list" id="checkout-items"></div>
                 <hr style="border: none; border-top: 1px solid var(--border); margin: 20px 0;">
@@ -63,8 +63,8 @@
 
                 <h3>Payment Method</h3>
                 <div style="display: flex; gap: 10px; margin: 15px 0;">
-                    <button class="btn" id="pay-upi" onclick="selectPayment('UPI')" style="flex: 1; border: 1px solid var(--primary);">UPI Pay</button>
-                    <button class="btn" id="pay-cash" onclick="selectPayment('Cash')" style="flex: 1; border: 1px solid var(--border);">Cash at Stall</button>
+                    <button class="btn" id="pay-upi" style="flex: 1; border: 1px solid var(--primary);">UPI Pay</button>
+                    <button class="btn" id="pay-cash" style="flex: 1; border: 1px solid var(--border);">Cash at Stall</button>
                 </div>
 
                 <div id="upi-qr-container" class="glass-card" style="display: block; text-align: center; margin-bottom: 20px;">
@@ -74,7 +74,7 @@
                     </div>
                 </div>
 
-                <button id="submit-order-btn" class="btn btn-primary" style="width: 100%;" onclick="submitOrder()">Confirm & Pay</button>
+                <button id="submit-order-btn" class="btn btn-primary" style="width: 100%;">Confirm & Pay</button>
             </div>
         </div>
 
@@ -89,7 +89,7 @@
                 </div>
                 <p id="queue-position">Position in queue: Calculating...</p>
                 <div class="loader" style="margin: 20px auto;"></div>
-                <button class="btn" style="background: var(--glass); width: 100%;" onclick="location.reload()">Refresh Status</button>
+                <button id="refresh-status-btn" class="btn" style="background: var(--glass); width: 100%;">Refresh Status</button>
             </div>
         </div>
     </div>

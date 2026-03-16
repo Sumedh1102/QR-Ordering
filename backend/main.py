@@ -32,11 +32,23 @@ FRONTEND_DIR = os.path.join(BASE_DIR, "..", "frontend")
 async def read_index():
     return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
 
+@app.get("/style.css")
+async def read_css():
+    return FileResponse(os.path.join(FRONTEND_DIR, "style.css"))
+
+@app.get("/script.js")
+async def read_js():
+    return FileResponse(os.path.join(FRONTEND_DIR, "script.js"))
+
+@app.get("/vendor_script.js")
+async def read_vendor_js():
+    return FileResponse(os.path.join(FRONTEND_DIR, "vendor_script.js"))
+
 @app.get("/vendor")
 async def read_vendor():
     return FileResponse(os.path.join(FRONTEND_DIR, "vendor.html"))
 
-# This will serve other files like script.js, style.css etc
+# This will serve other files like images etc
 app.mount("/", StaticFiles(directory=FRONTEND_DIR), name="static")
 
 @app.middleware("http")

@@ -5,6 +5,21 @@ document.addEventListener('DOMContentLoaded', () => {
     loadVendorOrders();
     loadVendorMenu();
     setInterval(loadVendorOrders, 5000); // Polling every 5s
+    
+    // Add event listeners
+    document.getElementById('show-orders-btn')?.addEventListener('click', () => showSection('orders'));
+    document.getElementById('show-menu-btn')?.addEventListener('click', () => showSection('menu'));
+    document.getElementById('refresh-orders-btn')?.addEventListener('click', loadVendorOrders);
+    document.getElementById('add-item-btn')?.addEventListener('click', addMenuItem);
+    
+    // Event delegation for order status updates
+    document.getElementById('orders-container')?.addEventListener('click', (e) => {
+        if (e.target.classList.contains('status-btn')) {
+            const orderId = e.target.dataset.id;
+            const status = e.target.dataset.status;
+            updateStatus(orderId, status);
+        }
+    });
 });
 
 function showSection(section) {
@@ -57,9 +72,9 @@ function renderOrderCards(orders) {
                 </div>
 
                 <div style="display: flex; gap: 10px;">
-                    ${o.status === 'Pending' ? `<button class="btn btn-primary" onclick="updateStatus(${o.id}, 'Preparing')">Start Preparing</button>` : ''}
-                    ${o.status === 'Preparing' ? `<button class="btn btn-primary" style="background: var(--success);" onclick="updateStatus(${o.id}, 'Ready')">Mark Ready</button>` : ''}
-                    ${o.status === 'Ready' ? `<button class="btn" style="background: var(--glass);" onclick="updateStatus(${o.id}, 'Completed')">Complete</button>` : ''}
+                    ${o.status === 'Pending' ? `<button class="btn btn-primary status-btn" data-id="${o.id}" data-status="Preparing">Start Preparing</button>` : ''}
+                    ${o.status === 'Preparing' ? `<button class="btn btn-primary status-btn" style="background: var(--success);" data-id="${o.id}" data-status="Ready">Mark Ready</button>` : ''}
+                    ${o.status === 'Ready' ? `<button class="btn status-btn" style="background: var(--glass);" data-id="${o.id}" data-status="Completed">Complete</button>` : ''}
                 </div>
             </div>
         `;
