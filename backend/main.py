@@ -25,16 +25,19 @@ app.add_middleware(
 )
 
 # Serve Frontend Files
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FRONTEND_DIR = os.path.join(BASE_DIR, "..", "frontend")
+
 @app.get("/")
 async def read_index():
-    return FileResponse("../frontend/index.html")
+    return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
 
 @app.get("/vendor")
 async def read_vendor():
-    return FileResponse("../frontend/vendor.html")
+    return FileResponse(os.path.join(FRONTEND_DIR, "vendor.html"))
 
 # This will serve other files like script.js, style.css etc
-app.mount("/", StaticFiles(directory="../frontend"), name="static")
+app.mount("/", StaticFiles(directory=FRONTEND_DIR), name="static")
 
 @app.middleware("http")
 async def log_requests(request, call_next):
