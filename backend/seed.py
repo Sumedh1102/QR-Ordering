@@ -6,6 +6,13 @@ models.Base.metadata.create_all(bind=engine)
 def seed():
     db = SessionLocal()
     
+    # Check if seed already exists
+    existing_vendor = db.query(models.Vendor).filter(models.Vendor.name == "Street Bites - Momos & More").first()
+    if existing_vendor:
+        print("Database already seeded. Skipping...")
+        db.close()
+        return
+
     # 1. Create a Vendor
     vendor = models.Vendor(
         name="Street Bites - Momos & More",
@@ -13,7 +20,7 @@ def seed():
         hashed_password="password123", # In real app, use hashing
         latitude=19.0760, # Example: Mumbai lat
         longitude=72.8777, # Example: Mumbai lon
-        qr_code_url="http://localhost:8005/vendor/1"
+        qr_code_url="https://qr-ordering-system.onrender.com/frontend/index.html?vendor_id=1"
     )
     db.add(vendor)
     db.commit()
