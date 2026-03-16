@@ -25,8 +25,6 @@ app.add_middleware(
 )
 
 # Serve Frontend Files
-app.mount("/frontend", StaticFiles(directory="../frontend"), name="frontend")
-
 @app.get("/")
 async def read_index():
     return FileResponse("../frontend/index.html")
@@ -34,6 +32,9 @@ async def read_index():
 @app.get("/vendor")
 async def read_vendor():
     return FileResponse("../frontend/vendor.html")
+
+# This will serve other files like script.js, style.css etc
+app.mount("/", StaticFiles(directory="../frontend"), name="static")
 
 @app.middleware("http")
 async def log_requests(request, call_next):
